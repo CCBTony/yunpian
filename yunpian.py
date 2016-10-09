@@ -299,10 +299,12 @@ class ClientV1(ClientBase):
 
         return self.request('sms', 'sms', 'tpl_send', 'post', **params)
 
-    def send_multi_sms(self, jobs, extend=None, uid=None, callback_url=None):
+    def send_multi_sms(self, mobiles=[], contents=[], jobs=[], extend=None, uid=None, callback_url=None):
         """
         Send multiple SMS to multiple mobile at the same time
-        :param jobs: {list|dict} element is a mobile -> sms map,
+        :param mobiles: {list} phone number strings
+        :param contents: {list} message content strings
+        :param jobs: {list|dict} element is a mobile -> sms map, break into phones/messages at last
             example:
                 case list:
                     [
@@ -332,15 +334,17 @@ class ClientV1(ClientBase):
         :return: {Response}
         :author: gzj 20160812
         """
-        mobiles, contents = [], []
 
-        if type(jobs) == dict:
-            jobs = [jobs]
+        if jobs:
+            mobiles, contents = [], []
 
-        for job in jobs:
-            for mobile, content in job.items():
-                mobiles.append(mobile)
-                contents.append(quote(content))
+            if type(jobs) == dict:
+                jobs = [jobs]
+
+            for job in jobs:
+                for mobile, content in job.items():
+                    mobiles.append(mobile)
+                    contents.append(quote(content))
 
         if len(mobiles) > 1000:
             raise ValueError('Can\'t send more then 1000 SMS at the same time')

@@ -42,7 +42,8 @@ res = c.get_account()
 # res = c.broadcast_sms(['151xxxxxxx1', '151xxxxxxx2'], '【签名】短信内容')
 
 # V1 批量个性化发送; V2 个性化发送;
-# res = c.send_multi_sms([
+# 使用jobs方式配置任务
+# res = c.send_multi_sms(jobs=[
 #     {
 #         '151xxxxxxx1': '【签名1】短信内容1',
 #         '151xxxxxxx2': '【签名2】短信内容2',
@@ -52,6 +53,11 @@ res = c.get_account()
 #         '151xxxxxxx3': '【签名4】短信内容4',
 #     },
 # ])
+# 使用流水线方式配置任务
+# res = c.send_multi_sms(
+#     mobiles=['151xxxxxxx1', '151xxxxxxx2', '151xxxxxxx2', '151xxxxxxx3'],
+#     contents=['【签名1】短信内容1', '【签名2】短信内容2', '【签名3】短信内容3', '【签名4】短信内容4']
+# )
 
 # V1/V2 获取状态报告
 # res = c.get_sms_status()
@@ -66,7 +72,7 @@ res = c.get_account()
 # res = c.get_sms_send_record('2016-08-13 00:00:00', datetime.now(), 20)
 
 # V1/V2 查屏蔽词
-# res = c.get_black_word('我是大傻逼')
+# res = c.get_black_word('我是大傻逼')  # "傻逼"是屏蔽词
 
 # V1 指定模板发送; V2 指定模板单发
 # res = c.send_tpl_sms('151xxxxxxxx', 11111, {'context': '模板上下文'})
