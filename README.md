@@ -1,8 +1,7 @@
 # yunpian
 yunpian api client for python2/3
 
-
-Independence: requests>=2.11.0
+Dependence: requests>=2.11.0
 
 Features:
 
